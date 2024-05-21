@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BCS211025</title>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Users Record</h1>
+      <p class="text-center text-muted mb-4" style="font-size: 0.875rem">
+        I have used the concept of LocalStorage for smooth operations
+      </p>
+      <div class="d-flex justify-content-between mb-3">
+        <button
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#addUserModal"
+        >
+          Add New Record
+        </button>
+        <input
+          type="text"
+          id="search"
+          placeholder="Search person by Name/Email"
+          onkeyup="searchUsers()"
+          class="form-control w-50"
+          style="max-width: 300px"
+        />
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th>USER ID</th>
+                <th>NAME</th>
+                <th>EMAIL</th>
+                <th>PHONE</th>
+                <th>CITY</th>
+                <th>OPERATIONS</th>
+              </tr>
+            </thead>
+            <tbody id="userTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="addUserModal"
+      aria-labelledby="userModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userModalLabel">Add New User</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" id="addUserForm">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" id="name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="email" id="email" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input class="form-control" type="tel" id="phone" required />
+              </div>
+              <div class="form-group">
+                <label for="city">City</label>
+                <input class="form-control" type="text" id="city" required />
+              </div>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="viewUserModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="viewUserModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="viewUserModalLabel">
+              View User Details
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="viewName">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="viewName"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="viewEmail">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="viewEmail"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="viewPhone">Phone</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="viewPhone"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="viewCity">City</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="viewCity"
+                  readonly
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="editUserModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="editUserModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editUserModalLabel">
+              Edit User Details
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="editUserForm">
+              <div class="form-group">
+                <label for="editName">Name</label>
+                <input type="text" class="form-control" id="editName" />
+              </div>
+              <div class="form-group">
+                <label for="editEmail">Email</label>
+                <input type="email" class="form-control" id="editEmail" />
+              </div>
+              <div class="form-group">
+                <label for="editPhone">Phone</label>
+                <input type="tel" class="form-control" id="editPhone" />
+              </div>
+              <div class="form-group">
+                <label for="editCity">City</label>
+                <input type="text" class="form-control" id="editCity" />
+              </div>
+              <button type="submit" class="btn btn-success" id="saveChanges">
+                Save Changes
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
